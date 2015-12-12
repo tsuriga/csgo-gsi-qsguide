@@ -39,7 +39,7 @@ Below is a list of subscribable components that could be found in the Game State
 "allplayers_match_stats"    "1"
 ```
 
-To learn more about what kind of data the CS:GO client sends out run [the Node sample server from Valve Developer wiki](https://developer.valvesoftware.com/wiki/Counter-Strike:_Global_Offensive_Game_State_Integration#Sample_HTTP_POST_Endpoint_Server "Sample Endpoint Server") using all of the components from the list above. You can direct all of the output to a file by running `node mysample.js > out.txt`. Then just run the game and try to play out different scenarios: different maps, different side winning in different situations, spectate players that are using different guns with different skins, play different modes, etc.
+To learn more about what kind of data the CS:GO client sends out run `node outputpayloads.js > out.txt` using all of the components from the list above. Then run the game and try to play out different scenarios: different maps, different side winning in different situations, spectate players that are using different guns with different skins, play different modes, etc. It'll write everything into *out.txt* file.
 
 
 ##What's next
