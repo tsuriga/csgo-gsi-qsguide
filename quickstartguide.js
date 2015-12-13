@@ -75,7 +75,7 @@ function detectRoundAndMapEnd(data) {
             output += 'killing the opposition';
         }
 
-        output += ' (CT ' + ctPoints + '–' + tPoints + ' T)';
+        output += ' (CT ' + ctPoints + '-' + tPoints + ' T)';
 
         if (readProperty(data, 'previously.map.phase') === 'live' &&
             readProperty(data, 'map.phase') === 'gameover'
