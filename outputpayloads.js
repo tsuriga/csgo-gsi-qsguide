@@ -4,8 +4,8 @@ fs = require('fs');
 port = 3000;
 host = '127.0.0.1';
 
-server = http.createServer( function(req, res) {
-    console.log("Handling POST request...");
+server = http.createServer(function(req, res) {
+    console.log('Handling POST request...');
 
     var body = '';
 
