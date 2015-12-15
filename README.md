@@ -17,7 +17,7 @@ By the end of this guide you'll have a program running in your console printing 
 
 4. Run the endpoint server and leave it running in the background. You can do this by opening up a shell (e.g. Command Prompt) and running this in the directory you copied the files to: `node quickstartguide.js`
 
-5. Start up CS:GO and play offline against bots. For easy testing set `mp_maxrounds 2` in console once you load into a map. You can play online against other players just as well, it's just faster to see how the program works if you do it against bots. Note that the sample program I made doesn't work correctly on hostage or arms race maps (I assume).
+5. Start up CS:GO and play offline against bots. For easy testing set `mp_maxrounds 2` in console once you load into a map. You can play online against other players just as well, it's just faster to see how the program works if you do it against bots. Note that the quick start sample server most likely does not work correctly on hostage or arms race maps.
 
 
 ## Payloads
