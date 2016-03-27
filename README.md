@@ -14,8 +14,8 @@ By the end of this guide you'll have a program running in your console printing 
 2. Copy the *gamestate_integration_quickstartguide.cfg* into your csgo/config directory (likely located at *Steam\SteamApps\common\Counter-Strike Global Offensive\csgo\cfg*).
 
 3. Install either NodeJS or Python 3, depending on which programming language you wish to use:
-- [Node.js Stable programming environment](https://nodejs.org/en/download/stable/ "Node.js Stable"). The server may work on the Mature version (v4 at the time of writing) as well, I only tested the guide on Stable (v5.2 at the time of writing).
-- [Python 3](https://www.python.org/downloads/ "Python downloads"). Tested on Python 3.4.
+  - [Node.js Stable programming environment](https://nodejs.org/en/download/stable/ "Node.js Stable"). The server may work on the Mature version (v4 at the time of writing) as well, I only tested the guide on Stable (v5.2 at the time of writing).
+  - [Python 3](https://www.python.org/downloads/ "Python downloads"). Tested on Python 3.4.
 
 4. Run the endpoint server and leave it running in the background. You can do this by opening up a shell (e.g. Command Prompt) and running this in the directory you copied the files to: `node quickstartguide.js` for the NodeJS server, or `python quickstartguide.py` for the Python server.
 
