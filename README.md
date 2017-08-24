@@ -1,4 +1,4 @@
-#Counter-Strike: Global Offensive Game State Integration Quick Start Guide
+# Counter-Strike: Global Offensive Game State Integration Quick Start Guide
 
 This is a quick start guide to the [CS:GO Game State Integration](https://developer.valvesoftware.com/wiki/Counter-Strike:_Global_Offensive_Game_State_Integration "CS:GO Game State Integration"), referenced on 2015-12-10.
 
@@ -7,7 +7,7 @@ By the end of this guide you'll have a program running in your console printing 
 **NOTE!** At the time of writing (CS:GO version 13514) [the round payload is different for the first round compared to consecutive ones](http://i.imgur.com/UIijPE9.jpg "Round payloads for rounds 1-3"). I regard it as a bug and hope it'll be fixed in future patches. This is why the sample program prints scores wrong for the first round.
 
 
-##The Steps
+## The Steps
 
 1. Clone this repository. If you're unfamiliar with the process, you can alternatively just copy the files above to some directory on your computer.
 
@@ -44,7 +44,7 @@ Below is a list of all the subscribable components that could be found in the Ga
 To learn more about what kind of data the CS:GO client sends out run `node outputpayloads.js > out.txt` using all of the components from the list above. Then run the game and try to play out different scenarios: different maps, different side winning in different situations, spectate players that are using different guns with different skins, play different modes, etc. It'll write everything into *out.txt* file.
 
 
-##What's next
+## What's next
 
 Now you can start building your own service. From the script you'll quickly notice that parsing information out of the payloads is quite an arduous task at the moment – we can only hope they come up with an easier format in the future.
 
