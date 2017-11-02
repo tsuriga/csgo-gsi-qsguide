@@ -1,5 +1,7 @@
 # Counter-Strike: Global Offensive Game State Integration Quick Start Guide
 
+Languages: Python 3 & JavaScript (NodeJS)
+
 This is a quick start guide to the [CS:GO Game State Integration](https://developer.valvesoftware.com/wiki/Counter-Strike:_Global_Offensive_Game_State_Integration "CS:GO Game State Integration"), referenced on 2015-12-10.
 
 By the end of this guide you'll have a program running in your console printing out information about rounds as you play.
