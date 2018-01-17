@@ -5,10 +5,12 @@ import json
 
 
 class MyServer(HTTPServer):
-    def init_state(self):
-        """
-        You can store states over multiple requests in the server
-        """
+    def __init__(self, server_address, token, RequestHandler):
+        self.auth_token = token
+
+        super(MyServer, self).__init__(server_address, RequestHandler)
+
+        # You can store states over multiple requests in the server 
         self.round_phase = None
 
 
@@ -23,7 +25,17 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
 
+    def is_payload_authentic(self, payload):
+        if 'auth' in payload and 'token' in payload['auth']:
+            return payload['auth']['token'] == server.auth_token
+        else:
+            return False
+
     def parse_payload(self, payload):
+        # Ignore unauthenticated payloads
+        if not self.is_payload_authentic(payload):
+            return None
+
         round_phase = self.get_round_phase(payload)
 
         if round_phase != self.server.round_phase:
@@ -43,9 +55,7 @@ class MyRequestHandler(BaseHTTPRequestHandler):
         return
 
 
-server = MyServer(('localhost', 3000), MyRequestHandler)
-
-server.init_state()
+server = MyServer(('localhost', 3000), 'MYTOKENHERE', MyRequestHandler)
 
 print(time.asctime(), '-', 'CS:GO GSI Quick Start server starting')
 

@@ -1,19 +1,26 @@
-http = require('http');
-fs = require('fs');
+const http = require('http');
+const fs = require('fs');
 
-port = 3000;
-host = '127.0.0.1';
+const port = 3000;
+const host = '127.0.0.1';
 
-server = http.createServer(function(req, res) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
+/*
+ * Auth token is optional on local setups, but useful to prevent anyone from
+ * sending false information if you run this script on an external server
+ */
+const authToken = 'MYTOKENHERE';
 
-    var eventInfo = '';
 
-    req.on('data', function (data) {
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+
+    let eventInfo = '';
+
+    req.on('data', (data) => {
         eventInfo += processPayload(JSON.parse(data.toString()));
     });
 
-    req.on('end', function () {
+    req.on('end', () => {
         if (eventInfo !== '') {
             console.log(eventInfo);
         }
@@ -25,21 +32,26 @@ server = http.createServer(function(req, res) {
 /**
  * Processes payloads to parse game events
  *
- * @param object Payload as JSON object
- * @return string
+ * @param {object} data - Payload as JSON object
+ * @return {string}
  */
 function processPayload(data) {
-    var date = new Date(data.provider.timestamp * 1000),
-        output = '';
+    // Ignore unauthenticated payloads
+    if (!isAuthentic(data)) {
+        return '';
+    }
+
+    const date = new Date(data.provider.timestamp * 1000);
+    let output = '';
 
     output += detectRoundAndMapEnd(data);
 
     if (output.length > 0) {
-        output = '[' + date.getFullYear() + '-' +
-            (date.getMonth() + 1) + '-' +
-            date.getDate() + ' ' +
-            date.getHours() + ':' +
-            ('00' + date.getMinutes()).substr(-2) + '] ' +
+        output = `[${date.getFullYear()}-` +
+            `${(date.getMonth() + 1)}-` +
+            `${date.getDate()} ` +
+            `${date.getHours()}:` +
+            `${('00' + date.getMinutes()).substr(-2)}] ` +
             output;
     }
 
@@ -47,23 +59,34 @@ function processPayload(data) {
 }
 
 /**
+ * Ensures that the data coming in is from an authentic source
+ *
+ * @param {object} data - Payload as JSON object
+ * @return {boolean}
+ */
+function isAuthentic(data) {
+    return readProperty(data, 'auth.token') === authToken;
+}
+
+/**
  * Parses round endings and map endings from payloads
  *
- * @param object Payload as JSON object
- * @return string
+ * @param {object} data - Payload as JSON object
+ * @return {string}
  */
 function detectRoundAndMapEnd(data) {
-    var output = '';
+    let output = '';
 
     if (readProperty(data, 'added.round.win_team')) {
-        var winner = readProperty(data, 'round.win_team') === 'T' ? 'T' : 'CT',
-            ctPoints = (0 + (winner === 'CT')) +
-                readProperty(data, 'map.team_ct.score'),
-            tPoints = (0 + (winner === 'T')) +
-                readProperty(data, 'map.team_t.score'),
-            bombStatus = readProperty(data, 'round.bomb');
+        const winner = (readProperty(data, 'round.win_team') === 'T') ?
+            'T' : 'CT';
+        const ctPoints = (0 + (winner === 'CT')) +
+            readProperty(data, 'map.team_ct.score');
+        const tPoints = (0 + (winner === 'T')) +
+            readProperty(data, 'map.team_t.score');
+        const bombStatus = readProperty(data, 'round.bomb');
 
-        output += winner === 'T' ? 'Terrorists' : 'Counter-Terrorists';
+        output += (winner === 'T') ? 'Terrorists' : 'Counter-Terrorists';
 
         output += ' won by ';
 
@@ -75,7 +98,7 @@ function detectRoundAndMapEnd(data) {
             output += 'killing the opposition';
         }
 
-        output += ' (CT ' + ctPoints + '-' + tPoints + ' T)';
+        output += ` (CT ${ctPoints} - ${tPoints} T)`;
 
         if (readProperty(data, 'previously.map.phase') === 'live' &&
             readProperty(data, 'map.phase') === 'gameover'
@@ -98,21 +121,23 @@ function detectRoundAndMapEnd(data) {
 /**
  * Helper function to read values under nested paths from objects
  *
- * @param object
- * @param string Dot separated path to the desired property in the object
- * @return mixed Null if the object has no requested property, property value otherwise
+ * @param {object} container - Object container
+ * @param {string} propertyPath - Path to the property in the container
+ *                                separated by dots, e.g. 'map.phase'
+ * @return {mixed} Null if the object has no requested property, property value
+ *                 otherwise
  */
-function readProperty(object, property) {
-    var value = null,
-        properties = property.split('.');
+function readProperty(container, propertyPath) {
+    let value = null;
+    const properties = propertyPath.split('.');
 
-    for (var i = 0; i < properties.length; i++) {
-        if (!object.hasOwnProperty(properties[i])) {
+    for (const p of properties) {
+        if (!container.hasOwnProperty(p)) {
             return null;
         }
 
-        value = object[properties[i]];
-        object = object[properties[i]];
+        value = container[p];
+        container = container[p];
     }
 
     return value;

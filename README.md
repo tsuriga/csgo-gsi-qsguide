@@ -13,11 +13,11 @@ By the end of this guide you'll have a program running in your console printing 
 
 1. Clone this repository. If you're unfamiliar with the process, you can alternatively just copy the files above to some directory on your computer.
 
-2. Copy the *gamestate_integration_quickstartguide.cfg* into your csgo/config directory (likely located at *Steam\SteamApps\common\Counter-Strike Global Offensive\csgo\cfg*).
+2. Copy the *gamestate_integration_quickstartguide.cfg* into your CS:GO config directory (likely located at *Steam\SteamApps\common\Counter-Strike Global Offensive\csgo\cfg*).
 
 3. Install either NodeJS or Python 3, depending on which programming language you wish to use:
-  - [Node.js Stable programming environment](https://nodejs.org/en/download/stable/ "Node.js Stable"). The server may work on the Mature version (v4 at the time of writing) as well, I only tested the guide on Stable (v5.2 at the time of writing).
-  - [Python 3](https://www.python.org/downloads/ "Python downloads"). Tested on Python 3.4.
+  - [Node.js](https://nodejs.org/ "Node.js"). Tested on v8.5.0.
+  - [Python 3](https://www.python.org/downloads/ "Python downloads"). Tested on Python 3.6.4.
 
 4. Run the endpoint server and leave it running in the background. You can do this by opening up a shell (e.g. Command Prompt) and running this in the directory you copied the files to: `node quickstartguide.js` for the NodeJS server, or `python quickstartguide.py` for the Python server.
 
@@ -44,6 +44,10 @@ Below is a list of all the subscribable components that could be found in the Ga
 ```
 
 To learn more about what kind of data the CS:GO client sends out run `node outputpayloads.js > out.txt` using all of the components from the list above. Then run the game and try to play out different scenarios: different maps, different side winning in different situations, spectate players that are using different guns with different skins, play different modes, etc. It'll write everything into *out.txt* file.
+
+## Authentication
+
+The sample scripts show how to authenticate payloads but for simplicity's sake they self-contain the authentication tokens. On local servers the authentication step is optional, but if you plan to run the scripts on an external server, it's best to read the authentication token from outside the script and use SSL on the server to further protect the token.
 
 
 ## What's next
